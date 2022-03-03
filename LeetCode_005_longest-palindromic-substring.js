@@ -53,9 +53,9 @@ var longestPalindrome = function(s) {
             }
             else if (increment === 1) {
               // Fill second diagonal to Y only if they are equal
-                if (s[i] === s[i + 1]) {
-                    dp[i][i + 1] = 'Y';
-                    substrValue = [i, i + 2];
+                if (s[i] === s[j]) {
+                    dp[i][j] = 'Y';
+                    substrValue = [i, j + 1];
                 }
             }
             else if (s[i] === s[j] && dp[i + 1][j - 1] === 'Y') {
