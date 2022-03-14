@@ -39,3 +39,23 @@ var rob = function(nums) {
     
     return dp[nums.length -1]
 };
+
+/**
+ * To optimize on space complexity
+ * Step 1: We no need all dp array info in place, we need last 2 for every transaction
+ * Step 2: So swap the highest to secondMax and have prev highest in firstMax and result is secondMax
+ */
+var rob = function(nums) {
+    if (nums.length === 1) return nums[0];
+    let current = 0,
+        firstMax = nums[0],
+        secondMax = Math.max(nums[0], nums[1]);
+    
+    for (let count = 2; count < nums.length; count++) {
+        current = Math.max(secondMax, nums[count] + firstMax);
+        firstMax = secondMax;
+        secondMax = current;
+    }
+    
+    return secondMax;
+};
