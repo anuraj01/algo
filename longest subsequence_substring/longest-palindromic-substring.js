@@ -1,5 +1,5 @@
 /**
-
+   5. Longest Palindromic Substring  - Medium
 Given a string s, return the longest palindromic substring in s.
 
 Example 1:
@@ -85,10 +85,10 @@ Matrix formation looks like
         (c) (b) (c) (b) 
         0   1   2   3  
         --------------
-0 (c)   Y       Y    
-1 (b)       Y   Y   
-2 (c)           Y   
-3 (b)               Y
+0 (c)   Y       Y          ===> (0,0) --> c is palindrome    (0,2) cbc is palindrome
+1 (b)       Y       Y      ===> (1,1) --> b is palindrome    (1,1) bcb is palindrome
+2 (c)           Y          ===> (2,2) --> c is palindrome    
+3 (b)               Y      ===> (3,3) --> b is palindrome   
 
 
 fillMatrix iteration logic
