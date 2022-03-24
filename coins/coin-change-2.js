@@ -1,5 +1,5 @@
 /**
-    518. Coin Change 2
+    518. Coin Change 2 (Medium)
     
 You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
 
@@ -61,8 +61,8 @@ var change = function(amount, coins) {
     }
     
     // fill rest of the dp table
-    for (let coin = 1; coin <= coins.length; coin ++) {
-        for (let currentAmount = 1; currentAmount <= amount; currentAmount ++) {
+    for (let currentAmount = 1; currentAmount <= amount; currentAmount ++) {
+        for (let coin = 1; coin <= coins.length; coin ++) {
             let prevCoin = coins[coin - 1];
             let excludeCoin = dp[coin - 1][currentAmount]; // go to the previous row upward with currentAmount
             let includeCoin = dp[coin][currentAmount - prevCoin]; // go to left side of current coin array
