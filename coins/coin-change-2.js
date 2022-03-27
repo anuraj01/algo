@@ -47,7 +47,7 @@ All the values of coins are unique.
  * Step 3: Iterate thro coins.length and amount to fill remaining dp array
  * Step 4: When currentAmount is greater or equal to preCoin, then include and exclude the coins, else just exlcude it
  *         Exclude -> go to the previous row upward with currentAmount
- *         Include -> go to left side of current coin array
+ *         Include -> go to left side of current coin array, subtracting the amount from currentCoin
  * Step 5: Final result will be at last element of dp array (dp[coins.length][amount])
  */
 var change = function(amount, coins) {
@@ -61,8 +61,8 @@ var change = function(amount, coins) {
     }
     
     // fill rest of the dp table
-    for (let currentAmount = 1; currentAmount <= amount; currentAmount ++) {
-        for (let coin = 1; coin <= coins.length; coin ++) {
+    for (let coin = 1; coin <= coins.length; coin ++) {
+        for (let currentAmount = 1; currentAmount <= amount; currentAmount ++) {
             let prevCoin = coins[coin - 1];
             let excludeCoin = dp[coin - 1][currentAmount]; // go to the previous row upward with currentAmount
             let includeCoin = dp[coin][currentAmount - prevCoin]; // go to left side of current coin array
