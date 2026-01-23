@@ -22,6 +22,13 @@ Output: ["()"]
  * By this, only valid paranthesis will be printed and result will contain all valid paranthesis
  */
 
+/**
+    “try → check → undo → try another” pattern is classic backtracking
+    Backtracking is almost always implemented using recursion
+
+    Recursion → the technique (how the function calls itself)
+    Backtracking → the strategy (how you explore and prune possibilities)
+**/
 
 var generateParenthesis = function(n) {
     let result = [];
