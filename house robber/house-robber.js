@@ -59,3 +59,16 @@ var rob = function(nums) {
     
     return secondMax;
 };
+
+/**
+    At each house, I have two choices:
+    rob it (which means I must skip the previous house), or
+    skip it (which means I keep whatever max I had so far).
+
+    dp[i] = max(
+      dp[count - 1],           // skip current house
+      dp[count - 2] + nums[count]  // rob current house
+    )
+
+
+**/
