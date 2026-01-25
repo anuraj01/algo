@@ -74,3 +74,36 @@ coinChange([1, 3, 4, 5], 7); // 2
             So min is 2
 
 **/
+
+
+// If need to say Which coin did I choose last to reach this optimal value?
+
+var coinChangeWithCoins = function(coins, amount) {
+    const dp = Array(amount + 1).fill(Infinity);
+    const prev = Array(amount + 1).fill(null);
+
+    dp[0] = 0;
+
+    for (let i = 1; i <= amount; i++) {
+        for (const coin of coins) {
+            if (i - coin >= 0 && dp[i - coin] + 1 < dp[i]) {
+                dp[i] = dp[i - coin] + 1;
+                prev[i] = coin;
+            }
+        }
+    }
+
+    if (dp[amount] === Infinity) return [];
+
+    // reconstruct coins
+    const result = [];
+    let curr = amount;
+
+    while (curr > 0) {
+        const coin = prev[curr];
+        result.push(coin);
+        curr -= coin;
+    }
+
+    return result;
+};
