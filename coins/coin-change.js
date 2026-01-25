@@ -47,11 +47,10 @@ Constraints:
 var coinChange = function(coins, amount) {
    let dp = Array(amount + 1).fill(amount + 1);
     dp[0] = 0;
-    for (let currentAmount = 0; currentAmount <= amount; currentAmount++) {
-        for (let coin = 0; coin < coins.length; coin++) {
-            let currentCoin = coins[coin];
-            if (currentAmount - currentCoin >= 0) {
-                dp[currentAmount] = Math.min(dp[currentAmount], 1 + dp[currentAmount - currentCoin])
+    for (let currentAmount = 1; currentAmount <= amount; currentAmount++) {
+        for (const coin of coins) {
+            if (currentAmount - coin >= 0) {
+                dp[currentAmount] = Math.min(dp[currentAmount], 1 + dp[currentAmount - coin])
             }
         }
     }
