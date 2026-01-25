@@ -80,30 +80,31 @@ coinChange([1, 3, 4, 5], 7); // 2
 
 var coinChangeWithCoins = function(coins, amount) {
     const dp = Array(amount + 1).fill(Infinity);
-    const prev = Array(amount + 1).fill(null);
+    const prevCoin = Array(amount + 1).fill(null);
 
     dp[0] = 0;
 
-    for (let i = 1; i <= amount; i++) {
+    for (let currentAmount = 1; currentAmount <= amount; currentAmount++) {
         for (const coin of coins) {
-            if (i - coin >= 0 && dp[i - coin] + 1 < dp[i]) {
-                dp[i] = dp[i - coin] + 1;
-                prev[i] = coin;
+            if (currentAmount - coin >= 0 && dp[currentAmount - coin] + 1 < dp[currentAmount]) {
+                dp[currentAmount] = dp[currentAmount - coin] + 1;
+                prevCoin[currentAmount] = coin;
             }
         }
     }
 
     if (dp[amount] === Infinity) return [];
 
-    // reconstruct coins
+    // reconstruct the coins used
     const result = [];
     let curr = amount;
 
     while (curr > 0) {
-        const coin = prev[curr];
+        const coin = prevCoin[curr];
         result.push(coin);
         curr -= coin;
     }
 
     return result;
 };
+
