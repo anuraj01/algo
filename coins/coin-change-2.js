@@ -94,3 +94,49 @@ coins  (2) 2  |   1   1   2   2   3   3
 
 
 **/
+
+
+// If asked to print all the combination of coins, then it is BACKTRACKING
+var coinChangeCombinations = function(coins, amount) {
+    const result = [];
+
+    const backtrack = (remaining, start, path) => {
+        if (remaining === 0) {
+            result.push([...path]);
+            return;
+        }
+
+        for (let i = start; i < coins.length; i++) {
+            const coin = coins[i];
+            if (coin <= remaining) {
+                path.push(coin);
+                backtrack(remaining - coin, i, path); // i: reuse coin
+                path.pop();
+            }
+        }
+    };
+
+    backtrack(amount, 0, []);
+    return result;
+};
+
+
+/**
+coins = [1,2,5]
+amount = 5
+
+[
+  [1,1,1,1,1],
+  [1,1,1,2],
+  [1,2,2],
+  [5]
+]
+
+Aspect	        Counting ways (DP)	        Listing combinations (Backtracking)
+-----           ------------------          ------------------------------------
+Goal	            Number of ways	        All combinations
+Complexity	        O(amount × coins)	    Exponential
+Space	            O(amount)	            O(amount × number of combos)
+Approach	        Bottom-up DP	        Recursion + backtracking
+
+**/
