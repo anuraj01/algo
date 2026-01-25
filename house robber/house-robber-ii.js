@@ -99,4 +99,24 @@ var rob = function(nums) {
     return Math.max(secondMax_1, secondMax_2)
 };
 
+
+
+var rob = function(nums) {
+    if (nums.length === 1) return nums[0];
+
+    const robLinear = (start, end) => {
+        let prev2 = 0, prev1 = 0;
+        for (let i = start; i <= end; i++) {
+            let curr = Math.max(prev1, nums[i] + prev2);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
+    };
+
+    return Math.max(
+        robLinear(0, nums.length - 2),
+        robLinear(1, nums.length - 1)
+    );
+};
  
