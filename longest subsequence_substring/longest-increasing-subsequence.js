@@ -83,4 +83,14 @@ function lengthOfLIS(nums: number[]): number {
     Complexity
         Time: O(n²) → n ≤ 2500 is fine
         Space: O(n)
+
+    - dp[j] is the length of the best increasing subsequence ending at j
+
+        - Imagine each dp[j] as a pillar height.
+        - When you reach nums[i], you’re asking:
+            “Which pillar can I stand on and build one level higher?”
+            dp[j] + 1 = standing on pillar j and adding one block.
+        - You choose the tallest pillar you can legally stand on.
+    - dp[i] is the “The best LIS ending at i that I’ve seen so far.”
+    - Why i starts from 1 and j from 0?? Bcoz dp[0] is already computed as 1, so i from 0. J from 0 is necessary for comparision
 **/
