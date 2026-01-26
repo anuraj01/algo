@@ -105,3 +105,46 @@ Iter-1      Iter-2    Iter-3    Iter-4  Iter-5  Iter-6 ....
 
 **/
 longestPalindrome("cbcb")
+
+
+// ts with O(1) space, expand from each index approach
+
+function longestPalindrome(s: string): string {
+  if (s.length < 2) return s;
+
+  let start = 0;
+  let maxLen = 1;
+
+  const expand = (left: number, right: number): void => {
+    while (
+      left >= 0 &&
+      right < s.length &&
+      s[left] === s[right]
+    ) {
+      const len = right - left + 1;
+      if (len > maxLen) {
+        start = left;
+        maxLen = len;
+      }
+      left--;
+      right++;
+    }
+  };
+
+  for (let i = 0; i < s.length; i++) {
+    // Odd-length palindromes (center at i)
+    expand(i, i);
+    // Even-length palindromes (center between i and i+1)
+    expand(i, i + 1);
+  }
+
+  return s.substring(start, start + maxLen);
+}
+/**
+“A palindrome expands symmetrically from its center.
+For each index, I check both odd and even centers and expand outward while characters match.
+I track the longest valid window.”
+
+Time - O(n²)
+Space - O(1)
+**/
