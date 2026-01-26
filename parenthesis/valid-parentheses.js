@@ -79,3 +79,31 @@ var isValid = function(s) {
 
 
 isValid("()[{}]"); // true
+
+
+// ts and map based
+function isValid(s: string): boolean {
+  const stack: string[] = [];
+
+  const map: Record<string, string> = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+  };
+
+  for (const ch of s) {
+    // opening bracket
+    if (ch === '(' || ch === '[' || ch === '{') {
+      stack.push(ch);
+    } 
+    // closing bracket
+    else {
+      if (stack.length === 0) return false;
+
+      const top = stack.pop();
+      if (top !== map[ch]) return false;
+    }
+  }
+
+  return stack.length === 0;
+}
