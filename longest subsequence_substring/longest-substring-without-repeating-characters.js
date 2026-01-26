@@ -52,3 +52,56 @@ var lengthOfLongestSubstring = function(s) {
 };
 
 lengthOfLongestSubstring("abcabcbb")
+
+
+// ts based - sliding window
+//as shift and indexOf are already O(n)
+function lengthOfLongestSubstring(s: string): number {
+    let charSet = new Set<string>();
+    let left = 0;
+    let maxLength = 0;
+
+    for (let right = 0; right < s.length; right++) {
+        // If duplicate found, shrink window from left
+        while (charSet.has(s[right])) {
+            charSet.delete(s[left]);
+            left++;
+        }
+
+        charSet.add(s[right]);
+        maxLength = Math.max(maxLength, right - left + 1);
+    }
+
+    return maxLength;
+}
+
+/**
+At first glance, it looks like it could run up to n times per right → O(n²)?
+BUT each character is added and removed from the set at most once
+ - charSet.add() → max n times
+ - charSet.delete() → max n times
+✅ So total operations inside the while loop across the whole string = O(n)
+
+Space Complexity: O(min(n, charset))
+ - n → string length
+ - charset → total possible unique characters
+
+
+The while loop looks scary, but each character is touched at most twice, so overall linear.
+The Set size is only as big as the current window of unique characters.
+
+
+Input: "abcabcbb"
+
+right	char	charSet	    left	window	maxLength
+0	    a	    {a}	        0	    a	    1
+1	    b	    {a,b}	    0	    ab	    2
+2	    c	    {a,b,c}	    0	    abc	    3
+3	    a	    {b,c,a}	    1	    bca	    3
+4	    b	    {c,a,b}	    2	    cab	    3
+5	    c	    {a,b,c}	    3	    abc	    3
+6	    b	    {a,c,b}	    4	    cb	    3
+7	    b	    {b}	        7	    b	    3
+
+✅ Final maxLength = 3
+**/
