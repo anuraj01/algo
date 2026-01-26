@@ -80,3 +80,38 @@ var minRemoveToMakeValid = function(s) {
         return resultWithValidClose.join('');
     }
 };
+
+
+/**
+ TS included, 
+ - find for any invalid '(' and remove it in forward iteration
+ - find for any invlaid '(' and remove it in backward iteration
+ - .split("") is used to modify the value, simply iterating the string cannot modify its value
+**/
+function minRemoveToMakeValid(s: string): string {
+  const chars = s.split("");
+  let openCount = 0;
+
+  // Pass 1: remove invalid ')'
+  for (let i = 0; i < chars.length; i++) {
+    if (chars[i] === "(") {
+      openCount++;
+    } else if (chars[i] === ")") {
+      if (openCount === 0) {
+        chars[i] = ""; // mark for removal
+      } else {
+        openCount--;
+      }
+    }
+  }
+
+  // Pass 2: remove extra '(' from right
+  for (let i = chars.length - 1; i >= 0 && openCount > 0; i--) {
+    if (chars[i] === "(") {
+      chars[i] = "";
+      openCount--;
+    }
+  }
+
+  return chars.join("");
+}
