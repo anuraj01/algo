@@ -91,3 +91,29 @@ var longestPalindrome = function(s) {
     }
     return result;
 };
+
+// TS - using Set
+/**
+“A palindrome uses pairs of characters symmetrically, 
+with at most one odd-count character in the center. 
+I count frequencies, use all even pairs, and add one if any odd count exists.”
+
+**/
+    
+function longestPalindrome(s: string): number {
+  const set = new Set<string>();
+  let length = 0;
+
+  for (const ch of s) {
+    if (set.has(ch)) {
+      set.delete(ch);
+      length += 2;
+    } else {
+      set.add(ch);
+    }
+  }
+
+  if (set.size > 0) length += 1;
+
+  return length;
+}
