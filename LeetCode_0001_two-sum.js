@@ -61,7 +61,13 @@ var twoSum_usingObj = function(nums, target) {
     return [0, 1];
 };
 
-// using map to replace IndexOf, so that internal Iteration can be avoided
+/**
+using map to replace IndexOf, so that internal Iteration can be avoided
+    Time Complexity:
+        - O(n) — single pass through the array; Map operations are O(1) average.
+    Space Complexity:
+        - O(n) — the Map can store up to n elements.
+**/
 var twoSum_usingMap = function(nums, target) {
     let indexFinder = new Map();
     for(let count = 0; count < nums.length; count ++) {
