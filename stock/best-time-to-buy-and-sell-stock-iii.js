@@ -51,4 +51,35 @@ var maxProfit = function(prices) {
     return maxProfit_2;
 };
 
+/**
+  TS based
+  Correctness intuition
+  - buy1 / sell1 track the best first transaction so far
+  - buy2 represents the effective cost of the second buy after first profit
+  - sell2 is the best total profit after at most two transactions
+  - Enforces “sell before buy again” by construction
+
+Complexity
+  - Time: O(n) — single linear pass
+  - Space: O(1) — constant extra state
+**/
+function maxProfit(prices: readonly number[]): number {
+  let buy1 = Number.POSITIVE_INFINITY;
+  let buy2 = Number.POSITIVE_INFINITY;
+  let sell1 = 0;
+  let sell2 = 0;
+
+  for (const price of prices) { // As INFINITY is defined, no need to start from index 1
+    // First transaction
+    buy1 = Math.min(buy1, price);
+    sell1 = Math.max(sell1, price - buy1);
+
+    // Second transaction (profit from first offsets cost of second)
+    buy2 = Math.min(buy2, price - sell1);
+    sell2 = Math.max(sell2, price - buy2);
+  }
+
+  return sell2;
+}
+
 maxProfit([3,3,5,0,0,3,1,4]);
