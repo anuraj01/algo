@@ -59,5 +59,26 @@ var maxProfit = function(prices) {
     return maxProfit;
 };
 
+/**
+  TS based
+  Complexity:
+    - Time: O(n) — one linear pass
+    - Space: O(1) — constant extra space
+**/
+function maxProfit(prices: readonly number[]): number {
+  let totalProfit = 0;
+
+  for (let i = 1; i < prices.length; i++) {
+    const delta = prices[i] - prices[i - 1];
+
+    // Capture every ascending edge (greedy accumulation)
+    if (delta > 0) {
+      totalProfit += delta;
+    }
+  }
+
+  return totalProfit;
+}
+
 
 maxProfit([7,1,5,3,6,4]);
