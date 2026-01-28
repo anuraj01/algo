@@ -64,17 +64,23 @@ Complexity
   - Space: O(1) — constant extra state
 **/
 function maxProfit(prices: readonly number[]): number {
-  let buy1 = Number.POSITIVE_INFINITY;
-  let buy2 = Number.POSITIVE_INFINITY;
+  if (prices.length < 2) return 0;
+
+  let buy1 = prices[0];
   let sell1 = 0;
+
+  // Effective cost of second buy accounts for profit from first sell
+  let buy2 = prices[0];
   let sell2 = 0;
 
-  for (const price of prices) { // As INFINITY is defined, no need to start from index 1
+  for (let i = 1; i < prices.length; i++) {
+    const price = prices[i];
+
     // First transaction
     buy1 = Math.min(buy1, price);
     sell1 = Math.max(sell1, price - buy1);
 
-    // Second transaction (profit from first offsets cost of second)
+    // Second transaction
     buy2 = Math.min(buy2, price - sell1);
     sell2 = Math.max(sell2, price - buy2);
   }
