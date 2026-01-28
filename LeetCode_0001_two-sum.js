@@ -68,18 +68,22 @@ using map to replace IndexOf, so that internal Iteration can be avoided
     Space Complexity:
         - O(n) — the Map can store up to n elements.
 **/
-var twoSum_usingMap = function(nums, target) {
-    let indexFinder = new Map();
-    for(let count = 0; count < nums.length; count ++) {
-        let numToBeAdded = target - nums[count];
-        if (indexFinder.has(numToBeAdded)) {
-            return [count, indexFinder.get(numToBeAdded)]
-        }
-        indexFinder.set(nums[count], count);
+function twoSumUsingMap(nums: readonly number[], target: number): [number, number] {
+  const indexByValue = new Map<number, number>();
+
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+
+    const matchIndex = indexByValue.get(complement);
+    if (matchIndex !== undefined) {
+      return [matchIndex, i];
     }
-    
-    return [0, 1];
-};
+
+    indexByValue.set(nums[i], i);
+  }
+
+  throw new Error("No valid two-sum solution exists");
+}
 
 
 twoSum([2,7,11,15], 9)
