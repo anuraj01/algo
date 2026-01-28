@@ -54,5 +54,40 @@ const findMinPriceMaxProfit = (minPrice, maxProfit, price, k) => {
     }
 }
 
+/**
+  TS based
+
+  Complexity
+     - n = prices.length → number of days
+     - k = maximum number of allowed transactions
+  Time Complexity:
+    - O(n × k)
+      - Outer loop runs once per day (n)
+      - Inner loop runs once per transaction (k)
+Space Complexity:
+    - O(k)
+      - Two arrays of size k (minPrice, profit)
+      - No extra space grows with n
+**/
+
+function maxProfit(k: number, prices: readonly number[]): number {
+  if (k === 0 || prices.length === 0) return 0;
+
+  const minPrice: number[] = Array(k).fill(prices[0]);
+  const profit: number[] = Array(k).fill(0);
+
+  for (let day = 1; day < prices.length; day++) {
+    const price = prices[day];
+
+    for (let t = 0; t < k; t++) {
+      const prevProfit = t > 0 ? profit[t - 1] : 0;
+
+      minPrice[t] = Math.min(minPrice[t], price - prevProfit);
+      profit[t] = Math.max(profit[t], price - minPrice[t]);
+    }
+  }
+
+  return profit[k - 1];
+}
 
 maxProfit(2, [2,4,1]);
