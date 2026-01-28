@@ -28,5 +28,33 @@ var maxProfit = function(prices) {
     return maxProfit;
 };
 
+/**
+ TS based, optimized
+ Complexity:
+    - Time: O(n) — single pass through prices
+    - Space: O(1) — constant extra space
+**/
+function maxProfit(prices: readonly number[]): number {
+  if (prices.length < 2) return 0; //Early guard for invalid input
+
+  let minPrice = prices[0];
+  let bestProfit = 0;
+
+  for (let i = 1; i < prices.length; i++) {
+    const price = prices[i];
+
+    if (price < minPrice) {
+      minPrice = price;
+      continue; // avoids unnecessary subtraction
+    }
+
+    const profit = price - minPrice;
+    if (profit > bestProfit) {
+      bestProfit = profit;
+    }
+  }
+  return bestProfit;
+}
+
 
 maxProfit([7,2,5,3,2,6,4])
