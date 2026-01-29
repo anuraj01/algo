@@ -6,6 +6,10 @@ Area type
 ----------
  - The area is always limited by the shorter of the two lines
  - Therefore, moving the taller line cannot improve the area, because the shorter line still limits it.
+ - First find the current area
+       - Width is distance between left and right
+       - Height is minHeight of left and right
+       - Update the maxArea 
  - Less than 2 line → cannot calculate area
 
 Trapping type
