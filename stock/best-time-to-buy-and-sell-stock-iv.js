@@ -57,6 +57,12 @@ const findMinPriceMaxProfit = (minPrice, maxProfit, price, k) => {
 /**
   TS based
 
+  Key point
+    - Same pattern, first find minPrice at each step
+    - As it has k transaction, minPrice can be subtracted from previousProfit
+    - Then maxProfit is obtained from selling current price with minPrice
+    - ** We wont have previousProfit for first transaction
+    
   Complexity
      - n = prices.length → number of days
      - k = maximum number of allowed transactions
