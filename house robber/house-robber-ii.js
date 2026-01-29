@@ -99,24 +99,54 @@ var rob = function(nums) {
     return Math.max(secondMax_1, secondMax_2)
 };
 
+/**
+TS based
 
+Key point
+ - The first and last houses are adjacent.
+ - So we cannot rob both.
+ 
+Time Complexity: O(n)
+  - Two linear passes over the array
+  - O(n) + O(n) → still O(n)
+Space Complexity: O(1)
+  - Constant extra space
+  - No DP arrays
 
-var rob = function(nums) {
-    if (nums.length === 1) return nums[0];
+**/
 
-    const robLinear = (start, end) => {
-        let prev2 = 0, prev1 = 0;
+function rob(nums: readonly number[]): number {
+    const n = nums.length;
+
+    if (n === 1) {
+        return nums[0];
+    }
+
+    /**
+     * Computes the maximum amount that can be robbed
+     * from a linear range of houses [start..end].
+     */
+    const robLinear = (start: number, end: number): number => {
+        let prevMax = 0; // dp[i - 2]
+        let currentMax = 0; // dp[i - 1]
+
         for (let i = start; i <= end; i++) {
-            let curr = Math.max(prev1, nums[i] + prev2);
-            prev2 = prev1;
-            prev1 = curr;
+            const current = Math.max(
+                currentMax,         // skip current house
+                nums[i] + prevMax  // rob current house
+            );
+
+            prevMax = currentMax;
+            currentMax = current;
         }
-        return prev1;
+
+        return currentMax;
     };
 
+    // Case 1: Exclude the last house
+    // Case 2: Exclude the first house
     return Math.max(
-        robLinear(0, nums.length - 2),
-        robLinear(1, nums.length - 1)
+        robLinear(0, n - 2),
+        robLinear(1, n - 1)
     );
-};
- 
+}
