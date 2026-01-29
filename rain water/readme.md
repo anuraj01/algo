@@ -1,7 +1,6 @@
 Pattern
 --------
- - Always process the side with the smaller height
-     - while (left < right)
+    - while (left < right)
   
 Area type
 ----------
@@ -11,6 +10,7 @@ Area type
 
 Trapping type
 --------------
+  - Always process the side with the smaller height
   - If current bar is taller than anything we’ve seen → update leftMax
   - Otherwise → water gets trapped above it,
   - Then move the pointer inward.
