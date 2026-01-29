@@ -59,6 +59,17 @@ var maxProfit = function(prices) {
   - sell2 is the best total profit after at most two transactions
   - Enforces “sell before buy again” by construction
 
+  Key Point
+    - We track the best outcomes after each of the 2 transaction states, 
+    using profits from earlier trades to reduce the effective cost of later ones, 
+    achieving optimal profit in one pass and constant space.
+    - Same pattern
+      - First find the minPrice -> buy1
+      - Then find max profit by subtracting current price with minPrice -> sell1
+      - Above is first transaction
+      - Now again repeat it, find min price -> buy2 (but now as we got profit from 1st transaction, buy2 is current price - sell1)
+      - And final max profit is by subtracting current price with buy2
+
 Complexity
   - Time: O(n) — single linear pass
   - Space: O(1) — constant extra state
