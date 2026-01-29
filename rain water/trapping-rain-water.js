@@ -64,3 +64,54 @@ var trap = function(height) {
     
     return result;
 };
+
+/**
+ TS based
+ ** KEY RULE
+  - Always process the side with the smaller height
+  - Because the smaller side is the limiting wall — the taller side doesn’t matter yet (the taller side guarantees a boundary)
+  - If current bar is taller than anything we’ve seen → update leftMax
+  - Otherwise → water gets trapped above it, then move the pointer inward.
+  
+Time Complexity: O(n)
+ - Each index is processed once
+ - Single pass using two pointers
+
+Space Complexity: O(1)
+ - No auxiliary arrays
+ - Only constant extra variables
+ **/
+function trap(height: readonly number[]): number {
+    if (height.length < 3) {
+        // Less than 3 bars cannot trap water
+        return 0;
+    }
+
+    let left: number = 0;
+    let right: number = height.length - 1;
+
+    let leftMax: number = 0;
+    let rightMax: number = 0;
+
+    let totalWater: number = 0;
+
+    while (left < right) {
+        if (height[left] <= height[right]) {
+            if (height[left] >= leftMax) {
+                leftMax = height[left];
+            } else {
+                totalWater += leftMax - height[left];
+            }
+            left++;
+        } else {
+            if (height[right] >= rightMax) {
+                rightMax = height[right];
+            } else {
+                totalWater += rightMax - height[right];
+            }
+            right--;
+        }
+    }
+
+    return totalWater;
+}
