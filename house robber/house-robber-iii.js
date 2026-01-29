@@ -81,3 +81,62 @@ We must process children first because:
   The decision at the current node depends on children’s DP states
   Parent can’t be computed until children are done
 **/
+
+
+/**
+ * Definition for a binary tree node.
+ */
+class TreeNode {
+    val: number;
+    left: TreeNode | null;
+    right: TreeNode | null;
+
+    constructor(
+        val: number,
+        left: TreeNode | null = null,
+        right: TreeNode | null = null
+    ) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+/**
+ * Returns the maximum amount of money that can be robbed
+ * from a binary tree without robbing two directly-linked houses.
+ *
+ * @param root - Root of the binary tree
+ * @returns Maximum amount of money that can be robbed
+ */
+function rob(root: TreeNode | null): number {
+    /**
+     * DFS returns a tuple:
+     * [robCurrent, skipCurrent]
+     *
+     * robCurrent  = max money if we rob this node
+     * skipCurrent = max money if we skip this node
+     */
+    const dfs = (node: TreeNode | null): [number, number] => {
+        if (!node) {
+            return [0, 0];
+        }
+
+        const [leftRob, leftSkip] = dfs(node.left);
+        const [rightRob, rightSkip] = dfs(node.right);
+
+        // If we rob this node, we must skip both children
+        const robCurrent =
+            node.val + leftSkip + rightSkip;
+
+        // If we skip this node, children can be robbed or skipped independently
+        const skipCurrent =
+            Math.max(leftRob, leftSkip) +
+            Math.max(rightRob, rightSkip);
+
+        return [robCurrent, skipCurrent];
+    };
+
+    const [robRoot, skipRoot] = dfs(root);
+    return Math.max(robRoot, skipRoot);
+}
