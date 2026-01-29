@@ -65,6 +65,9 @@ var maxProfit = function(prices) {
   Key Point 
    - When you’re allowed to trade as many times as you want, the best approach is to take profit every time the price goes up, 
    because each rise adds to your total and doesn’t affect other trades.
+   - “Why not wait for the peak?” 
+       - Waiting yields the same profit
+       - Greedy accumulation is simpler, safer, and equivalent
    
   Complexity:
     - Time: O(n) — one linear pass
