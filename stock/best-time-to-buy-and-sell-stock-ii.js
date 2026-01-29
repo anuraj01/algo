@@ -61,6 +61,11 @@ var maxProfit = function(prices) {
 
 /**
   TS based
+
+  Key Point 
+   - When you’re allowed to trade as many times as you want, the best approach is to take profit every time the price goes up, 
+   because each rise adds to your total and doesn’t affect other trades.
+   
   Complexity:
     - Time: O(n) — one linear pass
     - Space: O(1) — constant extra space
