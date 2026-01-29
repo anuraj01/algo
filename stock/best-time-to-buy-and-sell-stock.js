@@ -30,6 +30,13 @@ var maxProfit = function(prices) {
 
 /**
  TS based, optimized
+
+ Key point
+  - We scan prices once, tracking the minimum buy price seen so far and the best profit achievable at each step, 
+  ensuring every valid transaction is evaluated implicitly in linear time.
+  - So first update minPrice
+  - Then find profit by subtracting current price with minPrice so far
+  
  Complexity:
     - Time: O(n) — single pass through prices
     - Space: O(1) — constant extra space
