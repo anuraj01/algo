@@ -72,3 +72,43 @@ var rob = function(nums) {
 
 
 **/
+
+/**
+TS Based
+
+This is a dynamic programming problem where each decision splits into rob-or-skip, 
+and because each state only depends on the previous two, 
+we can compute the optimal solution in linear time using constant space.
+
+Time Complexity: O(n)
+    - Each house is processed once
+    - Single linear pass
+Space Complexity: O(1)
+    - Constant extra space
+    - No DP array, only rolling variables
+
+
+**/
+function rob(nums: readonly number[]): number {
+    const n = nums.length;
+
+    if (n === 0) return 0;
+    if (n === 1) return nums[0];
+
+    // prevMax = max money robbed up to house i - 2
+    // currentMax = max money robbed up to house i - 1
+    let prevMax: number = nums[0];
+    let currentMax: number = Math.max(nums[0], nums[1]);
+
+    for (let i = 2; i < n; i++) {
+        const current = Math.max(
+            currentMax,           // skip current house
+            nums[i] + prevMax  // rob current house
+        );
+
+        prevMax = currentMax;
+        currentMax = current;
+    }
+
+    return currentMax;
+}
