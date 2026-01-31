@@ -89,12 +89,37 @@ change(5, [1, 2, 5]); // 4
 coins  (2) 2  |   1   1   2   2   3   3
        (5) 3  |   1   1   2   2   3   4
 
-
-
-
-
 **/
 
+/**
+
+TS Based
+
+
+Time complexity
+ - O(coins.length × amount)
+Space complexity
+ - O(amount)
+
+**/
+function change(amount: number, coins: readonly number[]): number {
+    // dp[x] = number of combinations to make amount x
+    const dp: number[] = new Array(amount + 1).fill(0);
+
+    // Base case: one way to make amount 0 (choose nothing)
+    dp[0] = 1;
+
+    // Process coins one by one to avoid counting permutations
+    for (const coin of coins) {
+        for (let current = coin; current <= amount; current++) {
+            dp[current] += dp[current - coin];
+        }
+    }
+
+    return dp[amount];
+}
+
+// -------------------------- TO PRINT ALL COMBINATION --------------------------------
 
 // If asked to print all the combination of coins, then it is BACKTRACKING
 var coinChangeCombinations = function(coins, amount) {
