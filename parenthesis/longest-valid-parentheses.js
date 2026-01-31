@@ -68,3 +68,37 @@ var longestValidParentheses = function(s) {
 };
 
 longestValidParentheses("(()"); // 2
+
+/**
+ TS based & Stack approach
+  - With stack it can be done with single iteration
+  - Stack stores indices of unmatched parenthesis
+  - Top of stack is index of last invalid position
+  - stack[stack.length - 1] is the index just before the start of valid substring
+  - why subtract?
+     - Because substring is (endIndex - stackTop)
+
+   Complexity
+    - Time and Space o(n)
+**/
+function longestValidParentheses(s: string): number {
+    let maxLen = 0;
+    const stack: number[] = [-1]; // base index
+
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === '(') {
+            stack.push(i);
+        } else {
+            stack.pop();
+
+            if (stack.length === 0) {
+                stack.push(i); // new base
+            } else {
+                maxLen = Math.max(maxLen, i - stack[stack.length - 1]);
+            }
+        }
+    }
+
+    return maxLen;
+}
+
