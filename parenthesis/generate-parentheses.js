@@ -51,3 +51,44 @@ const printParenthesis = (stringFormed, numOfOpeningBraces, numOfClosedBraces, r
         printParenthesis(`${stringFormed})`, numOfOpeningBraces, numOfClosedBraces+1, result, n);
     }
 }
+
+/**
+ TS based
+  - Used array, as string is immutable in js and any concatenation always create a brand new string
+  - with complexity of O(n), but array push and pop is o(1)
+  If you need to undo changes → use mutable state (array).
+  If you never undo → strings are fine.
+**/
+function generateParenthesis(n: number): string[] {
+    const result: string[] = [];
+
+    const backtrack = (
+        open: number,
+        close: number,
+        path: string[]
+    ): void => {
+        // Base case: valid complete sequence
+        if (path.length === 2 * n) {
+            result.push(path.join(""));
+            return;
+        }
+
+        // Rule 1: we can add '(' if we still have some left
+        if (open < n) {
+            path.push("(");
+            backtrack(open + 1, close, path);
+            path.pop();
+        }
+
+        // Rule 2: we can add ')' only if it won't break validity
+        if (close < open) {
+            path.push(")");
+            backtrack(open, close + 1, path);
+            path.pop();
+        }
+    };
+
+    backtrack(0, 0, []);
+    return result;
+}
+
