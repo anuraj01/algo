@@ -83,7 +83,7 @@ longestValidParentheses("(()"); // 2
 **/
 function longestValidParentheses(s: string): number {
     let maxLen = 0;
-    const stack: number[] = [-1]; // base index
+    const stack: number[] = [-1]; // base index, as nothing is invalid before start
 
     for (let i = 0; i < s.length; i++) {
         if (s[i] === '(') {
