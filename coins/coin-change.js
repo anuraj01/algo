@@ -72,7 +72,10 @@ coinChange([1, 3, 4, 5], 7); // 2
         1(coin 4) + dp[3] (dp[7-4]) = 2
         1(coin 5) + dp[2] (dp[7-5]) = 3
             So min is 2
-
+Time complexity 
+   - O(amount × number_of_coins)
+ Space complexity
+   - O(amount)
 **/
 
 
@@ -107,4 +110,6 @@ var coinChangeWithCoins = function(coins, amount) {
 
     return result;
 };
+
+
 
