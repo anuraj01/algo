@@ -56,6 +56,18 @@ lengthOfLongestSubstring("abcabcbb")
 
 // ts based - sliding window
 //as shift and indexOf are already O(n)
+/**
+    Key Point
+     - right only moves forward
+     - Each character is processed at most twice (add + remove)
+     - We detected a duplicate character
+     - The window is now invalid
+     - We shrink from the left until the duplicate is removed
+     - Why while, not if?
+        - Because:
+            -The duplicate might appear multiple positions back
+            - We must fully restore the invariant: no duplicates
+**/
 function lengthOfLongestSubstring(s: string): number {
     let charSet = new Set<string>();
     let left = 0;
