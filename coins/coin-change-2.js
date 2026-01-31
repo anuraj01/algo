@@ -94,6 +94,30 @@ coins  (2) 2  |   1   1   2   2   3   3
 /**
 
 TS Based
+KEY POINTS
+ - Order of iterations matter, as this is combination we need to use the coins as much as we can
+     - Hence coin iteration comes first
+ - At iteration:
+    - First coin → combinations using only coin[0]
+    - Second coin → combinations using coin[0..1]
+    …
+    - Last coin → combinations using all coins (We lock the order: once we move past a coin, we never go back and place it before earlier coins.)
+        🔑 This is what prevents permutations.
+ - Inner loop
+     - Try to build all amounts that can include this coin.
+     - Why start at coin?
+        - You can’t make an amount smaller than the coin’s value using that coin.
+     - Why go forward?
+        - Forward traversal allows unlimited usage of the same coin.
+ - dp[current] += dp[current - coin];
+     - “Every way to make current - coin can be extended by adding one coin to make current.”
+     - We’re not inventing new combinations — we’re extending existing valid ones.
+     - Coins are added in a fixed order
+     So:
+        - 1 + 2 + 1 + 1 ❌ never happens
+        - 2 + 1 + 1 + 1 ❌ never happens
+        - Only 1 + 1 + 1 + 2 ✅ happens
+        Order is structurally enforced, not checked manually.
 
 
 Time complexity
@@ -118,6 +142,44 @@ function change(amount: number, coins: readonly number[]): number {
 
     return dp[amount];
 }
+
+/**
+CODE WALKTHRO
+Concrete Walkthrough
+Input
+amount = 5
+coins = [1, 2]
+
+Initial
+dp = [1, 0, 0, 0, 0, 0]
+
+Coin = 1
+current	dp update	dp
+1	dp[1] += dp[0]	[1,1,0,0,0,0]
+2	dp[2] += dp[1]	[1,1,1,0,0,0]
+3	dp[3] += dp[2]	[1,1,1,1,0,0]
+4	dp[4] += dp[3]	[1,1,1,1,1,0]
+5	dp[5] += dp[4]	[1,1,1,1,1,1]
+
+All 1s → only using coin 1.
+
+Coin = 2
+current	dp update	dp
+2	dp[2] += dp[0]	[1,1,2,1,1,1]
+3	dp[3] += dp[1]	[1,1,2,2,1,1]
+4	dp[4] += dp[2]	[1,1,2,2,3,1]
+5	dp[5] += dp[3]	[1,1,2,2,3,3]
+
+Final:
+dp[5] = 3
+
+Combinations:
+1+1+1+1+1
+2+1+1+1
+2+2+1
+
+For each coin, I extend all previously valid smaller amounts, ensuring coins are only added in non-decreasing order.
+**/
 
 // -------------------------- TO PRINT ALL COMBINATION --------------------------------
 
