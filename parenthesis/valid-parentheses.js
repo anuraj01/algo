@@ -82,6 +82,7 @@ isValid("()[{}]"); // true
 
 
 // ts and map based
+// Time and Space complexity is O(n)
 function isValid(s: string): boolean {
   const stack: string[] = [];
 
