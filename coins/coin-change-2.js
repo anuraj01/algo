@@ -189,7 +189,7 @@ var coinChangeCombinations = function(coins, amount) {
 
     const backtrack = (remaining, start, path) => {
         if (remaining === 0) {
-            result.push([...path]);
+            result.push([...path]); // copy to avoid mutation
             return;
         }
 
@@ -198,7 +198,7 @@ var coinChangeCombinations = function(coins, amount) {
             if (coin <= remaining) {
                 path.push(coin);
                 backtrack(remaining - coin, i, path); // i: reuse coin
-                path.pop();
+                path.pop(); // undoes the last choice so you can try the next option cleanly
             }
         }
     };
